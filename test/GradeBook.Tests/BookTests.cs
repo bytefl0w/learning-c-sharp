@@ -6,7 +6,7 @@ namespace GradeBook.Tests
     public class BookTests
     {
         [Fact] // Attribute = a little pieces of data attached to the symbol that follows it
-        public void Test1()
+        public void BookCalculatesAnAverageGrade()
         {
             // arrange
             var book = new Book("");
