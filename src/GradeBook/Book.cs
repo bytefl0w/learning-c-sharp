@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace GradeBook
 {
+
+    public delegate void GradeAddedDelegate(object sender, EventArgs args);
+
     public class Book // internal modifier (given by default) = this class can only be used in this project
     {
         // Access modifiers (Public, Private)
@@ -13,7 +16,7 @@ namespace GradeBook
             Name = name;
         }
 
-        public void AddLetterGrade(char letter)
+        public void AddGrade(char letter)
         {
             switch (letter)
             {
@@ -41,12 +44,18 @@ namespace GradeBook
             if (grade <= 100 && grade >= 0)
             {
                 grades.Add(grade);
+                if (GradeAdded != null)
+                {
+                    GradeAdded(this, new EventArgs());
+                }
             }
             else
             {
                 throw new ArgumentException($"Invalid {nameof(grade)}");
             }
         }
+
+        public event GradeAddedDelegate GradeAdded;
 
         public Statistics GetStatistics()
         {
@@ -99,6 +108,29 @@ namespace GradeBook
         }
 
         private List<double> grades;
-        public string Name;
+
+        public string Name
+        {
+            get;
+            set; // No class outside of this one has the ability to set this var
+        }
+
+        // readonly string category = "Science"; // Can only be set in constructor or when inited
+        public const string CATEGORY = "Science"; // Can only be set when inited
+        // {
+        //     get
+        //     {
+        //         return name;
+        //     }
+        //     set
+        //     {
+        //         if (String.IsNullOrEmpty(value))
+        //         {
+        //             name = value; // value is the incoming value
+        //         }
+        //     }
+        // }
+
+        // private string name;
     }
 }
