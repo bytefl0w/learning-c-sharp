@@ -12,7 +12,23 @@ namespace GradeBook
             var input = Console.ReadLine();
             while (input != "q")
             {
-                book.AddGrade(double.Parse(input));
+                try
+                {
+                    var grade = double.Parse(input);
+                    book.AddGrade(grade);
+                }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                catch (FormatException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+                finally // Get for making sure you need, ex: close a network socket, close a file, or properlly clean things up
+                {
+                    Console.WriteLine("***");
+                }
                 input = Console.ReadLine();
             }
 
